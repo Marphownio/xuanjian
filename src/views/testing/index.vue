@@ -29,6 +29,9 @@
           <div class="el-upload__tip" slot="tip">请选择一个文件</div>
         </el-upload>
       </div>
+      <div class="footer">
+        <el-button @click="handleImTest">立即检测</el-button>
+      </div>
     </mainContainer>
     <el-drawer
       size="50%"
@@ -47,14 +50,20 @@ export default {
   components: { report },
   data() {
     return {
-      stepsActive: 2,
+      stepsActive: 1,
       drawer: false,
+      isSuccessUpload: true,
     };
   },
   methods: {
     handleAvatarSuccess(e) {
+      this.isSuccessUpload = true;
       console.log("上传成功", e);
-      this.stepsActive = 2;
+    },
+    handleImTest() {
+      if (this.isSuccessUpload) {
+        this.stepsActive = 2;
+      }
     },
     beforeAvatarUpload(file) {
       console.log("beforeAvatarUpload", file);

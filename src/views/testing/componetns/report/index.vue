@@ -15,7 +15,7 @@
             </div>
             <div class="appInfo">
               <div class="flex row">
-                <h4>黑产：</h4>
+                <h4>应用名称：</h4>
                 <div>{{ appInfo.apkName }}</div>
               </div>
               <div class="flex row">

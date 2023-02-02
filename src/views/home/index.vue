@@ -5,16 +5,16 @@
       <div class="content">
         <div class="title">黑产应用的后台黑产域名检测</div>
         <div class="text">
-          利用面向黑产应用后台域名的自动化流量采集技术，财力黑产应用的后台域名，并予以分类
+          利用面向黑产应用后台域名的自动化流量采集技术，采集黑产应用的后台域名，并予以分类。
         </div>
         <div class="ope">
           <el-button @click="$router.push({ name: 'testing' })"
-            >开始检测</el-button
-          >
+            >开始检测
+          </el-button>
         </div>
-        <div class="text">
+        <!-- <div class="text">
           统计数据网站过往分析APP个数，检测出黑产域名总个数
-        </div>
+        </div> -->
       </div>
       <div class="echarts">
         <div id="echarts1" ref="echarts1"></div>

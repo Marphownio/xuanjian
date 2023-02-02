@@ -12,7 +12,7 @@
       </el-steps>
       <div class="upload">
         <h4>
-          我们会根据上传的APK文件，检测应用程序可能搜集隐私，现在请等待检测的APK文件：
+          我们会根据上传的apk文件，检查后台黑产域名。
         </h4>
         <el-upload
           style="width: 100%"
@@ -25,8 +25,8 @@
           :before-upload="beforeAvatarUpload"
         >
           <i class="el-icon-upload"></i>
-          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-          <div class="el-upload__tip" slot="tip">请选择一个文件</div>
+          <div class="el-upload__text">将apk文件拖到此处，或<em>点击上传</em></div>
+          <div class="el-upload__tip" slot="tip">请上传需要检测的apk文件。</div>
         </el-upload>
       </div>
       <div class="footer">

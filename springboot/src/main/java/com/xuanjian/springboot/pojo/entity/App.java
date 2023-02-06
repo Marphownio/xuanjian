@@ -16,7 +16,7 @@ public class App implements Serializable {
     @Column(name = "id",unique = true)
     private Long id;
 
-    @Column(name = "name",nullable = false)
+    @Column(name = "name")
     private String name;
 
     @Column(name = "package_name",nullable = false)
@@ -31,12 +31,11 @@ public class App implements Serializable {
     @Column(name = "size",nullable = false)
     private float size;
 
-    @Column(name = "md5",nullable = false)
+    @Column(name = "md5")
     private String md5;
 
-    @Column(name = "check_time",nullable = false)
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private Date uploadTime;
+    @Column(name = "first_upload_time",nullable = false)
+    private String firstUploadTime;
 
     @Column(name = "analyse_time")
     private Integer analyseTime;
@@ -46,7 +45,7 @@ public class App implements Serializable {
 
     @Column(name = "signature_time")
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private Date signatureTime;
+    private String signatureTime;
 
     @Column(name = "restore_path",nullable = false)
     private String restorePath;

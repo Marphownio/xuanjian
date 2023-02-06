@@ -4,7 +4,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity(name="domain")
@@ -30,7 +32,7 @@ public class Domain implements Serializable {
 
     @ManyToMany
     @JoinTable(name = "distribution",joinColumns = {@JoinColumn(name= "distributing_domain", referencedColumnName="id")},inverseJoinColumns = {@JoinColumn(name = "distributed_domain", referencedColumnName="id")})
-    private List<Domain> distributionDomain;
+    private Set<Domain> distributionDomain = new HashSet<Domain>(0);
 
     @Column(length = 16, name = "domain_type", nullable = false)
     private String domainType;

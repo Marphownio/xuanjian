@@ -5,8 +5,13 @@ import com.xuanjian.springboot.pojo.entity.App;
 import com.xuanjian.springboot.pojo.enums.ResultMessage;
 import com.xuanjian.springboot.service.AppService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -21,8 +26,8 @@ public class AppController {
        return appService.getAppInformById(appId);
     }
 
-    @PutMapping("/upload")
-    public ResultMessage uploadNewApp(){
-        return ResultMessage.SUCCESS;
+    @PostMapping("/upload")
+    public ResultMessage uploadNewApp(@RequestParam(value = "file",required = false) MultipartFile file, HttpServletRequest request) throws IOException, ParseException {
+        return appService.userUploadApk(file,request);
     }
 }

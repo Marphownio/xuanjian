@@ -5,5 +5,8 @@ public enum ResultMessage {
     EXIST,
     FAILED,
     SUCCESS,
-    USER_NOT_EXIST
+    USER_NOT_EXIST,
+    NOT_LOGIN,
+    APK_NOT_EXIST,
+    FILE_EMPTY
 }

@@ -4,7 +4,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity(name = "user")
@@ -27,5 +29,5 @@ public class User implements Serializable {
     @ManyToMany
     @JoinTable(name = "upload_table", joinColumns = {@JoinColumn(name= "uploader_id", referencedColumnName="id")},
             inverseJoinColumns = {@JoinColumn(name= "app_id", referencedColumnName="id")})
-    private List<App> appList;
+    private Set<App> appList = new HashSet<App>(0);
 }

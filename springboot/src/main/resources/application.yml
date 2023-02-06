@@ -20,7 +20,7 @@ server:
   tomcat:
     uri-encoding: UTF-8
   port: 80
-#  servlet:
-#    session:
-#      timeout: 0
+  servlet:
+    session:
+      timeout: 1440
 

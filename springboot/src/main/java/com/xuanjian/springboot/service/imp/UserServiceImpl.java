@@ -55,17 +55,32 @@ public class UserServiceImpl implements UserService {
                 HttpSession session=request.getSession();
                 session.setAttribute("userName",userID);//给session添加属性
                 session.setAttribute("userID",user.getId());
-                String sessionId = session.getId();
+                //String sessionId = session.getId();
                 //System.out.println(sessionId);
                 //Cookie创建
-//                Cookie cookie = new Cookie("JSESSIONID", sessionId);
-//                cookie.setMaxAge(1 * 24 * 60 * 60);
-//                response.addCookie(cookie);
+                //Cookie cookie = new Cookie("JSESSIONID", sessionId);
+                //cookie.setMaxAge(1 * 24 * 60 * 60);
+                //response.addCookie(cookie);
                 return ResultMessage.SUCCESS;
             }
             else{
                 return ResultMessage.FAILED;
             }
         }
+    }
+
+    @Override
+    public ResultMessage userLogout(HttpServletRequest request){
+        try{
+            HttpSession session=request.getSession();
+            if(session.getAttribute("userName") == null || session.getAttribute("userID") == null){
+                session.invalidate();
+                return ResultMessage.NOT_LOGIN;
+            }
+            session.invalidate();
+        }catch (Exception e){
+            return ResultMessage.FAILED;
+        }
+        return ResultMessage.SUCCESS;
     }
 }

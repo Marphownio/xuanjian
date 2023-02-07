@@ -27,4 +27,9 @@ public class UserController {
        return userService.userLogin(userID,userPW,request,response);
     }
 
+    @PutMapping("/logout")
+    public ResultMessage userLogout(HttpServletRequest request) {
+        return userService.userLogout(request);
+    }
+
 }

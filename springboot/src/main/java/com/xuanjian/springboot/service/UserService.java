@@ -11,4 +11,6 @@ public interface UserService {
     ResultMessage userRegister(String userID, String userPW) throws NoSuchAlgorithmException;
 
     ResultMessage userLogin(String userID, String userPW, HttpServletRequest request, HttpServletResponse response) throws NoSuchAlgorithmException;
+
+    ResultMessage userLogout(HttpServletRequest request);
 }

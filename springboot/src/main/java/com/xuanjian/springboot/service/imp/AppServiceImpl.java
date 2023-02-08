@@ -6,6 +6,7 @@ import com.xuanjian.springboot.pojo.enums.ResultMessage;
 import com.xuanjian.springboot.repository.AppRepository;
 import com.xuanjian.springboot.repository.UserRepository;
 import com.xuanjian.springboot.service.AppService;
+import com.xuanjian.springboot.service.UserService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,9 @@ public class AppServiceImpl implements AppService {
 
     @Resource
     private UserRepository userRepository;
+
+    @Resource
+    private UserService userService;
 
     @Transactional  //开启事务
     @Override
@@ -91,6 +95,24 @@ public class AppServiceImpl implements AppService {
             return ResultMessage.SUCCESS;
         }
 
+    }
+
+    @Override
+    public ResponseEntity<Set<App>> appsUploadByUser(HttpServletRequest request){
+        HttpSession session=request.getSession();
+        if(session.getAttribute("userName") == null || session.getAttribute("userID") == null){
+            return new ResponseEntity<>(new HashSet<>(), HttpStatus.EXPECTATION_FAILED);
+        }
+        Long userID = (Long) session.getAttribute("userID");
+        Optional<User> currentUser = userRepository.findById(userID);
+        if(!currentUser.isPresent()){
+            return new ResponseEntity<>(new HashSet<>(), HttpStatus.EXPECTATION_FAILED);
+        }
+        Set<App> appList = currentUser.get().getAppList();
+        if (appList.isEmpty()){
+            return new ResponseEntity<>(new HashSet<>(), HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(appList, HttpStatus.OK);
     }
 
     @Override

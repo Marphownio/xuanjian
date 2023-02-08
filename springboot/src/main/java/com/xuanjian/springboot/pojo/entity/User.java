@@ -26,7 +26,7 @@ public class User implements Serializable {
     @Column(name= "user_slat", nullable = false)
     private String userSalt;
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
     @JoinTable(name = "upload_table", joinColumns = {@JoinColumn(name= "uploader_id", referencedColumnName="id")},
             inverseJoinColumns = {@JoinColumn(name= "app_id", referencedColumnName="id")})
     private Set<App> appList = new HashSet<App>(0);

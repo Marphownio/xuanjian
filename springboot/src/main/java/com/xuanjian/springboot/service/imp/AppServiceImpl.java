@@ -63,7 +63,7 @@ public class AppServiceImpl implements AppService {
             newApk.setFirstUploadTime(date);
             newApk.setSize(apkSize);
             //写入文件
-            String filePath = "D:\\学习\\网络灰黑产研究\\挑战杯\\xuanjian\\springboot\\src\\main\\resources\\static\\apk\\"; // 上传后的路径
+            String filePath = "/home/scam/apks/"; // 上传后的路径
             filePath += apkName;
             newApk.setRestorePath(filePath);
             FileOutputStream fos = null;

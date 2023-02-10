@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteTargetsManager">
+    <targets>
+      <target name="scam@10.176.122.229:22" type="ssh/sftp" uuid="34b08d8c-1834-4f4e-b038-4ecaa4e5965e">
+        <config>
+          <option name="projectRootOnTarget" value="/home/scam/xuanjian" />
+          <option name="serverName" value="scam@10.176.122.229:22 password" />
+        </config>
+        <ContributedStateBase type="JavaLanguageRuntime">
+          <config>
+            <option name="homePath" value="/usr/bin/java" />
+            <option name="javaVersionString" value="1.8.0_292" />
+          </config>
+        </ContributedStateBase>
+      </target>
+    </targets>
+  </component>
+</project>

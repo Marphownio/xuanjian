@@ -8,5 +8,6 @@ public enum ResultMessage {
     USER_NOT_EXIST,
     NOT_LOGIN,
     APK_NOT_EXIST,
-    FILE_EMPTY
+    FILE_EMPTY,
+    VERIFY_CODE_ERROR
 }

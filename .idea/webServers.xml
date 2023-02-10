@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="63b91725-0646-4a26-b29c-ff6bc8ff6c39" name="scam@229">
+        <fileTransfer rootFolder="/home/scam/xuanjian" accessType="SFTP" host="10.176.122.229" port="22" sshConfigId="08d4527e-7054-4eea-9baa-9ec6682efcfd" sshConfig="scam@10.176.122.229:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

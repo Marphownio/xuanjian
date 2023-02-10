@@ -26,6 +26,9 @@ public class User implements Serializable {
     @Column(name= "user_slat", nullable = false)
     private String userSalt;
 
+    @Column(name= "user_email", nullable = false)
+    private String userEmail;
+
     @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
     @JoinTable(name = "upload_table", joinColumns = {@JoinColumn(name= "uploader_id", referencedColumnName="id")},
             inverseJoinColumns = {@JoinColumn(name= "app_id", referencedColumnName="id")})

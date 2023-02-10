@@ -20,6 +20,12 @@ spring:
     multipart:
       max-file-size: 512MB
       max-request-size: 512MB
+  mail:
+    host: smtp.qq.com # 此处使用的是qq邮箱进行邮件发送
+    username: 1135632411@qq.com # 发送邮件的账号（也就是本人账号）
+    password: kvhkanefbvgehdfh # 账号秘钥（注意这不是登录你QQ邮箱的密码！该秘钥在开启SMTP服务时会给出。）
+    default-encoding: UTF-8 #编码风格
+
 server:
   tomcat:
     uri-encoding: UTF-8

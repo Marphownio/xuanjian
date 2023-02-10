@@ -18,8 +18,8 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResultMessage userRegister(@RequestParam("userName") String userID,@RequestParam("userPassword") String userPW) throws NoSuchAlgorithmException {
-        return userService.userRegister(userID,userPW);
+    public ResultMessage userRegister(@RequestParam("userName") String userID,@RequestParam("userPassword") String userPW,@RequestParam("userEmail") String userEmail) throws NoSuchAlgorithmException {
+        return userService.userRegister(userID,userPW,userEmail);
     }
 
     @PostMapping("/login")
@@ -30,6 +30,16 @@ public class UserController {
     @PutMapping("/logout")
     public ResultMessage userLogout(HttpServletRequest request) {
         return userService.userLogout(request);
+    }
+
+    @PostMapping("/forgetPassword")
+    public String userForgetPassword(@RequestParam("userName") String userName, HttpServletRequest request) {
+        return userService.userForgetPassword(userName, request);
+    }
+
+    @PostMapping("/resetPassword")
+    public ResultMessage userResetPassword(@RequestParam("newPassword") String userPW, @RequestParam("userVerifyCode") String userVerifyCode, HttpServletRequest request) throws NoSuchAlgorithmException {
+        return userService.userResetPassword(userPW, userVerifyCode, request);
     }
 
 }

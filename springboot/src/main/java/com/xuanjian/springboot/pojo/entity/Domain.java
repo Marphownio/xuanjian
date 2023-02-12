@@ -35,5 +35,5 @@ public class Domain implements Serializable {
     private Set<Domain> distributionDomain = new HashSet<Domain>(0);
 
     @Column(length = 16, name = "domain_type", nullable = false)
-    private String domainType;
+    private int domainType;
 }

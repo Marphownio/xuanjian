@@ -20,17 +20,17 @@ public class DomainServiceImpl implements DomainService {
     public ResponseEntity<DomainInform> domainOverview(){
         DomainInform domainInform = new DomainInform();
         domainInform.setDomainNumber((int) domainRepository.count());
-        domainInform.setBusinessDomainNumber((int) domainRepository.count());
-        domainInform.setAdvertiseDomainNumber((int) domainRepository.count());
-        domainInform.setResourceDomainNumber((int) domainRepository.count());
-        domainInform.setThirdPartyDomainNumber((int) domainRepository.count());
-        domainInform.setDistributionDomainNumber((int) domainRepository.count());
-        domainInform.setBroadcastDomainNumber((int) domainRepository.count());
-        domainInform.setAlternativeDomainNumber((int) domainRepository.count());
-        domainInform.setGraphDividedDomainNumber((int) domainRepository.count());
-        domainInform.setPageDomainNumber((int) domainRepository.count());
-        domainInform.setUpdateDomainNumber((int) domainRepository.count());
-        domainInform.setUserDomainNumber((int) domainRepository.count());
+        domainInform.setBusinessDomainNumber(domainRepository.countByFunction(32768));
+        domainInform.setAdvertiseDomainNumber(domainRepository.countByFunction(16384));
+        domainInform.setResourceDomainNumber(domainRepository.countByFunction(8192));
+        domainInform.setThirdPartyDomainNumber(domainRepository.countByFunction(4096));
+        domainInform.setDistributionDomainNumber(domainRepository.countByFunction(2048));
+        domainInform.setBroadcastDomainNumber(domainRepository.countByFunction(1024));
+        domainInform.setAlternativeDomainNumber(domainRepository.countByFunction(512));
+        domainInform.setGraphDividedDomainNumber(domainRepository.countByFunction(256));
+        domainInform.setPageDomainNumber(domainRepository.countByFunction(128));
+        domainInform.setUpdateDomainNumber(domainRepository.countByFunction(64));
+        domainInform.setUserDomainNumber(domainRepository.countByFunction(32));
         return new ResponseEntity<>(domainInform, HttpStatus.OK);
     }
 

@@ -29,8 +29,8 @@ public class AppController {
     }
 
     @PostMapping("/upload")
-    public ResultMessage uploadNewApp(@RequestParam(value = "file",required = false) MultipartFile file, HttpServletRequest request) throws IOException, ParseException {
-        return appService.userUploadApk(file,request);
+    public ResultMessage uploadNewApp(@RequestParam(value = "file",required = false) MultipartFile[] files, HttpServletRequest request) throws IOException, ParseException {
+        return appService.userUploadApk(files,request);
     }
 
     @GetMapping("/getUploadHistory")

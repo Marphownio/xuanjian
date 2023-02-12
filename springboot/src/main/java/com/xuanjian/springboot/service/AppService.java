@@ -13,7 +13,9 @@ import java.util.Set;
 
 public interface AppService {
 
-    ResultMessage userUploadApk(MultipartFile file,HttpServletRequest request) throws IOException, ParseException;
+    int numberOfApks();
+
+    ResultMessage userUploadApk(MultipartFile[] files,HttpServletRequest request) throws IOException, ParseException;
 
     //根据ID获取APP的信息
     List<App> getAppInformById(Long appId);

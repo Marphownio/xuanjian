@@ -1,11 +1,12 @@
 package com.xuanjian.springboot.pojo.entity;
 
 import javax.persistence.*;
+
+import com.xuanjian.springboot.pojo.enums.ApkAnalyseState;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @Entity(name = "apps")
@@ -23,10 +24,7 @@ public class App implements Serializable {
     private String packageName;
 
     @Column(name = "version_id",nullable = true)
-    private Integer versionId;
-
-    @Column(name = "version_name",nullable = true)
-    private String versionName;
+    private String versionId;
 
     @Column(name = "size",nullable = false)
     private float size;
@@ -36,6 +34,9 @@ public class App implements Serializable {
 
     @Column(name = "first_upload_time",nullable = false)
     private String firstUploadTime;
+
+    @Column(name = "current_state",nullable = false)
+    private ApkAnalyseState currentState;
 
     @Column(name = "analyse_time")
     private Integer analyseTime;

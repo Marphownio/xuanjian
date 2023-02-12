@@ -17,6 +17,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
@@ -42,8 +43,11 @@ public class AppServiceImpl implements AppService {
     @Transactional  //开启事务
     @Override
     public ResultMessage userUploadApk(MultipartFile[] files,HttpServletRequest request) throws IOException, ParseException {
-        HashSet<Long> apkIDSet = new HashSet<Long>();
         HttpSession session = request.getSession();
+        HashSet<Long> apkIDSet = new HashSet<Long>();
+        if(session.getAttribute("tempUploadSet") != null){
+            apkIDSet = (HashSet<Long>) session.getAttribute("tempUploadSet");
+        }
         if(files.length == 0) {
             return ResultMessage.FILE_EMPTY;
         }
@@ -66,12 +70,39 @@ public class AppServiceImpl implements AppService {
             newApk.setFirstUploadTime(date);
             newApk.setSize(apkSize);
             newApk.setCurrentState(ApkAnalyseState.UPLOADED);
+            newApk.setRestorePath("temp");
+            App tempApk;
+            try {
+                //新apk写入数据库
+                tempApk = appRepository.save(newApk);
+                if (session.getAttribute("userName") != null && session.getAttribute("userID") != null) {
+                    Long userID = (Long) session.getAttribute("userID");
+                    Optional<User> user = userRepository.findById(userID);
+                    if (user.isPresent()) {
+                        user.get().getAppList().add(tempApk);
+                    }
+                    userRepository.save(user.get());
+                }
+                else{
+                    apkIDSet.add(tempApk.getId());
+                }
+            } catch (Exception e) {
+                return ResultMessage.FAILED;
+            }
             //写入文件
-            String filePath = "/home/scam/seaweedfs/data/mount/2023/"; // 上传后的路径
-            filePath += newApk.getId();
+            //创建文件夹
+            String directoryPath = "/home/scam/seaweedfs/data/mount/2023/";
+            directoryPath += tempApk.getId();
+            File dirMaker = new File(directoryPath);
+            if(!dirMaker.mkdir()){
+                return ResultMessage.FAILED;
+            }
+            //写入文件
+            String filePath = directoryPath; // 上传后的路径
             filePath += "/";
-            filePath += newApk.getId();
-            newApk.setRestorePath(filePath);
+            filePath += tempApk.getId();
+            filePath += ".apk";
+            tempApk.setRestorePath(filePath);
             FileOutputStream fos = null;
             try {
                 fos = new FileOutputStream(filePath);
@@ -87,19 +118,8 @@ public class AppServiceImpl implements AppService {
                 }
             }
             try {
-                //新apk写入数据库
-                appRepository.save(newApk);
-                if (session.getAttribute("userName") != null && session.getAttribute("userID") != null) {
-                    Long userID = (Long) session.getAttribute("userID");
-                    Optional<User> user = userRepository.findById(userID);
-                    if (user.isPresent()) {
-                        user.get().getAppList().add(newApk);
-                    }
-                    userRepository.save(user.get());
-                }
-                else{
-                    apkIDSet.add(newApk.getId());
-                }
+                //apk写入存储路径
+                appRepository.save(tempApk);
             } catch (Exception e) {
                 return ResultMessage.FAILED;
             }
@@ -119,10 +139,10 @@ public class AppServiceImpl implements AppService {
         Set<App> appList;
         if(session.getAttribute("userName") == null || session.getAttribute("userID") == null){
             if(session.getAttribute("tempUploadSet") == null)
-                return new ResponseEntity<>(new HashSet<>(), HttpStatus.EXPECTATION_FAILED);
+                return new ResponseEntity<>(new HashSet<>(), HttpStatus.NO_CONTENT);
             HashSet<Long> apkIDSet = (HashSet<Long>) session.getAttribute("tempUploadSet");
             if(apkIDSet.isEmpty())
-                return new ResponseEntity<>(new HashSet<>(), HttpStatus.EXPECTATION_FAILED);
+                return new ResponseEntity<>(new HashSet<>(), HttpStatus.NO_CONTENT);
             appList = new HashSet<App>();
             for(Long apkID : apkIDSet){
                 Optional<App> tempApp = appRepository.findById(apkID);

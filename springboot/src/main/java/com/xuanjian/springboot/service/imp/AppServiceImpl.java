@@ -2,8 +2,9 @@ package com.xuanjian.springboot.service.imp;
 
 import com.xuanjian.springboot.pojo.entity.App;
 import com.xuanjian.springboot.pojo.entity.User;
+import com.xuanjian.springboot.pojo.enums.AnalysisState;
 import com.xuanjian.springboot.pojo.enums.ResultMessage;
-import com.xuanjian.springboot.pojo.enums.ApkAnalyseState;
+import com.xuanjian.springboot.pojo.enums.SandboxState;
 import com.xuanjian.springboot.repository.AppRepository;
 import com.xuanjian.springboot.repository.UserRepository;
 import com.xuanjian.springboot.service.AppService;
@@ -69,7 +70,8 @@ public class AppServiceImpl implements AppService {
             newApk.setPackageName(apkName);
             newApk.setFirstUploadTime(date);
             newApk.setSize(apkSize);
-            newApk.setCurrentState(ApkAnalyseState.UPLOADED);
+            newApk.setSandboxState(SandboxState.UPLOADED);
+            newApk.setAnalysisState(AnalysisState.UPLOADED);
             newApk.setRestorePath("temp");
             App tempApk;
             try {

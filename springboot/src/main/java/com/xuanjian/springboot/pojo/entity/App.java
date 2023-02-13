@@ -2,7 +2,8 @@ package com.xuanjian.springboot.pojo.entity;
 
 import javax.persistence.*;
 
-import com.xuanjian.springboot.pojo.enums.ApkAnalyseState;
+import com.xuanjian.springboot.pojo.enums.AnalysisState;
+import com.xuanjian.springboot.pojo.enums.SandboxState;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -35,8 +36,11 @@ public class App implements Serializable {
     @Column(name = "first_upload_time",nullable = false)
     private String firstUploadTime;
 
-    @Column(name = "current_state",nullable = false)
-    private ApkAnalyseState currentState;
+    @Column(name = "sandbox_state",nullable = false)
+    private SandboxState sandboxState;
+
+    @Column(name = "analysis_state",nullable = false)
+    private AnalysisState analysisState;
 
     @Column(name = "analyse_time")
     private Integer analyseTime;

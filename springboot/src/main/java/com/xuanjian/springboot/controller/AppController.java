@@ -23,8 +23,8 @@ public class AppController {
     @Resource
     private AppService appService;
 
-    @GetMapping("/getAppInformById/{appId}")
-    public List<App> getAppInformById(@PathVariable("appId") Long appId){
+    @GetMapping("/getAppInformById")
+    public List<App> getAppInformById(@RequestParam("appId") Long appId){
        return appService.getAppInformById(appId);
     }
 
@@ -36,5 +36,10 @@ public class AppController {
     @GetMapping("/getUploadHistory")
     public ResponseEntity<Set<App>> getUserUploadHistory(HttpServletRequest request){
         return appService.appsUploadByUser(request);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Set<App>> searchAppByName(@RequestParam("appName") String appName){
+        return appService.searchAppByName(appName);
     }
 }

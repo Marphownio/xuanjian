@@ -21,4 +21,6 @@ public interface AppService {
     List<App> getAppInformById(Long appId);
 
     ResponseEntity<Set<App>> appsUploadByUser(HttpServletRequest request);
+
+    ResponseEntity<Set<App>> searchAppByName(String appName);
 }

@@ -170,4 +170,9 @@ public class AppServiceImpl implements AppService {
     public List<App> getAppInformById(Long appId){
         return appRepository.findAllById(Collections.singleton(appId));
     }
+
+    @Override
+    public ResponseEntity<Set<App>> searchAppByName(String appName){
+        return ResponseEntity.ok(appRepository.findAllByNameLike("%"+appName+"%"));
+    }
 }

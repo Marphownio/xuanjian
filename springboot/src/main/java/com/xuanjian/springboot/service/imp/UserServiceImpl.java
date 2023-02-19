@@ -60,16 +60,12 @@ public class UserServiceImpl implements UserService {
         }
         else{
             if(user.getUserPassword().equals(encryptService.encryptPasswordWithSalt(user.getUserSalt(),userPW))){
+                HttpSession oldSession=request.getSession();
+                oldSession.invalidate();
                 //session的创建
                 HttpSession session=request.getSession();
                 session.setAttribute("userName",userID);//给session添加属性
                 session.setAttribute("userID",user.getId());
-                //String sessionId = session.getId();
-                //System.out.println(sessionId);
-                //Cookie创建
-                //Cookie cookie = new Cookie("JSESSIONID", sessionId);
-                //cookie.setMaxAge(1 * 24 * 60 * 60);
-                //response.addCookie(cookie);
                 return ResultMessage.SUCCESS;
             }
             else{

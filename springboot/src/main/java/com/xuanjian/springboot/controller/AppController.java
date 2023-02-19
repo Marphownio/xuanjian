@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -24,7 +25,7 @@ public class AppController {
     private AppService appService;
 
     @GetMapping("/getAppInformById")
-    public List<App> getAppInformById(@RequestParam("appId") Long appId){
+    public Optional<App> getAppInformById(@RequestParam("appId") Long appId){
        return appService.getAppInformById(appId);
     }
 

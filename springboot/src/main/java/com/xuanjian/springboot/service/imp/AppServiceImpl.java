@@ -167,8 +167,8 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public List<App> getAppInformById(Long appId){
-        return appRepository.findAllById(Collections.singleton(appId));
+    public Optional<App> getAppInformById(Long appId){
+        return appRepository.findById(appId);
     }
 
     @Override

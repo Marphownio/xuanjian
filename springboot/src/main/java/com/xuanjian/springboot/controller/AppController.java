@@ -2,6 +2,7 @@ package com.xuanjian.springboot.controller;
 
 
 import com.xuanjian.springboot.pojo.entity.App;
+import com.xuanjian.springboot.pojo.entity.Screenshot;
 import com.xuanjian.springboot.pojo.enums.ResultMessage;
 import com.xuanjian.springboot.service.AppService;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,11 @@ public class AppController {
     @GetMapping("/getAppInformById")
     public Optional<App> getAppInformById(@RequestParam("appId") Long appId){
        return appService.getAppInformById(appId);
+    }
+
+    @GetMapping("/screenshot")
+    public ResponseEntity<Set<String>> getScreenshotById(@RequestParam("appId") Long appId){
+        return appService.getScreenshotById(appId);
     }
 
     @PostMapping("/upload")

@@ -1,11 +1,13 @@
 package com.xuanjian.springboot.service.imp;
 
 import com.xuanjian.springboot.pojo.entity.App;
+import com.xuanjian.springboot.pojo.entity.Screenshot;
 import com.xuanjian.springboot.pojo.entity.User;
 import com.xuanjian.springboot.pojo.enums.AnalysisState;
 import com.xuanjian.springboot.pojo.enums.ResultMessage;
 import com.xuanjian.springboot.pojo.enums.SandboxState;
 import com.xuanjian.springboot.repository.AppRepository;
+import com.xuanjian.springboot.repository.ScreenshotRepository;
 import com.xuanjian.springboot.repository.UserRepository;
 import com.xuanjian.springboot.service.AppService;
 import com.xuanjian.springboot.service.UserService;
@@ -34,7 +36,7 @@ public class AppServiceImpl implements AppService {
     private UserRepository userRepository;
 
     @Resource
-    private UserService userService;
+    private ScreenshotRepository screenshotRepository;
 
     @Override
     public int numberOfApks(){
@@ -169,6 +171,11 @@ public class AppServiceImpl implements AppService {
     @Override
     public Optional<App> getAppInformById(Long appId){
         return appRepository.findById(appId);
+    }
+
+    @Override
+    public ResponseEntity<Set<String>> getScreenshotById(Long appId){
+        return ResponseEntity.ok(screenshotRepository.findStorePathByAppId(appId));
     }
 
     @Override

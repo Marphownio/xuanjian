@@ -1,6 +1,7 @@
 package com.xuanjian.springboot.service;
 
 import com.xuanjian.springboot.pojo.entity.App;
+import com.xuanjian.springboot.pojo.entity.Screenshot;
 import com.xuanjian.springboot.pojo.enums.ResultMessage;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +20,8 @@ public interface AppService {
 
     //根据ID获取APP的信息
     Optional<App> getAppInformById(Long appId);
+
+    ResponseEntity<Set<String>> getScreenshotById(Long appId);
 
     ResponseEntity<Set<App>> appsUploadByUser(HttpServletRequest request);
 

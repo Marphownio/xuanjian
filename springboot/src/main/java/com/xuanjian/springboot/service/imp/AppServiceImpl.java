@@ -101,6 +101,10 @@ public class AppServiceImpl implements AppService {
             if(!dirMaker.mkdir()){
                 return ResultMessage.FAILED;
             }
+            String cmd = "chmod o+w /home/scam/seaweedfs/data/mount/2023/";
+            cmd += tempApk.getId();
+            Process p = Runtime.getRuntime().exec(cmd);
+            p.destroy();
             //写入文件
             String filePath = directoryPath; // 上传后的路径
             filePath += "/";

@@ -55,5 +55,7 @@ public class App implements Serializable {
     @Column(name = "restore_path",nullable = false)
     private String restorePath;
 
+    @Column(name = "plat_version")
+    private Integer platVersion;
 }
 

@@ -1,7 +1,6 @@
 package com.xuanjian.springboot.service.imp;
 
 import com.xuanjian.springboot.pojo.entity.App;
-import com.xuanjian.springboot.pojo.entity.Screenshot;
 import com.xuanjian.springboot.pojo.entity.User;
 import com.xuanjian.springboot.pojo.enums.AnalysisState;
 import com.xuanjian.springboot.pojo.enums.ResultMessage;
@@ -10,8 +9,9 @@ import com.xuanjian.springboot.repository.AppRepository;
 import com.xuanjian.springboot.repository.ScreenshotRepository;
 import com.xuanjian.springboot.repository.UserRepository;
 import com.xuanjian.springboot.service.AppService;
-import com.xuanjian.springboot.service.UserService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,9 +20,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -185,5 +183,25 @@ public class AppServiceImpl implements AppService {
     @Override
     public ResponseEntity<Set<App>> searchAppByName(String appName){
         return ResponseEntity.ok(appRepository.findAllByNameLike("%"+appName+"%"));
+    }
+
+    @Override
+    public ResponseEntity getAppIconById(Long appId) throws IOException {
+        byte[] bytes;
+        // 设置一个head
+        HttpHeaders headers = new HttpHeaders();
+        //设置ContentType的值 IMAGE_JPEG在浏览器返回图片
+        headers.setContentType(MediaType.IMAGE_PNG);
+        try{
+            File file = new File("/home/scam/seaweedfs/data/mount/2023/"+appId+"/icon.png");
+            // 内容是字节流
+            FileInputStream fis = new FileInputStream(file);
+            bytes = new byte[fis.available()];
+            fis.read(bytes);
+            fis.close();
+        }catch (Exception e){
+            return new ResponseEntity<>(new HashSet<>(), HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
     }
 }

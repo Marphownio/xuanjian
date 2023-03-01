@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Optional;
@@ -26,4 +27,6 @@ public interface AppService {
     ResponseEntity<Set<App>> appsUploadByUser(HttpServletRequest request);
 
     ResponseEntity<Set<App>> searchAppByName(String appName);
+
+    ResponseEntity<byte[]> getAppIconById(Long appId) throws IOException;
 }

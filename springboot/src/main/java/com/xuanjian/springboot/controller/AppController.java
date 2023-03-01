@@ -34,6 +34,10 @@ public class AppController {
     public ResponseEntity<Set<String>> getScreenshotById(@RequestParam("appId") Long appId){
         return appService.getScreenshotById(appId);
     }
+    @GetMapping("/appIcon")
+    public ResponseEntity<byte[]> getAppIconById(@RequestParam("appId") Long appId) throws IOException {
+        return appService.getAppIconById(appId);
+    }
 
     @PostMapping("/upload")
     public ResultMessage uploadNewApp(@RequestParam(value = "file",required = false) MultipartFile[] files, HttpServletRequest request) throws IOException, ParseException {

@@ -4,5 +4,6 @@ public enum SandboxState {
     MD5_REPEATED,
     UPLOADED,
     SANDBOX_FINISHED,
-    SANDBOX_ANALYSING
+    SANDBOX_ANALYSING,
+    ERROR
 }

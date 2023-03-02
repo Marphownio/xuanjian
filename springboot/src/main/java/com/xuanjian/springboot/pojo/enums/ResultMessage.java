@@ -10,5 +10,6 @@ public enum ResultMessage {
     APK_NOT_EXIST,
     FILE_EMPTY,
     VERIFY_CODE_ERROR,
-    PART_SUCCESS
+    PART_SUCCESS,
+    ALREADY_LOGIN
 }

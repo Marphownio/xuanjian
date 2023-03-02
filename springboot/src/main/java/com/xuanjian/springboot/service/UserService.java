@@ -22,5 +22,7 @@ public interface UserService {
     String userGenerateCode();
 
     ResultMessage userResetPassword(String userPW, String userVerifyCode, HttpServletRequest request) throws NoSuchAlgorithmException;
+
+    ResultMessage userIfLogin(HttpServletRequest request);
 }
 

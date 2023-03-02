@@ -22,6 +22,11 @@ public class UserController {
         return userService.userRegister(userID,userPW,userEmail);
     }
 
+    @GetMapping("/ifLogin")
+    public ResultMessage userIfLogin(HttpServletRequest request){
+        return userService.userIfLogin(request);
+    }
+
     @PostMapping("/login")
     public ResultMessage userLogin(@RequestParam("userName") String userID, @RequestParam("userPassword") String userPW, HttpServletRequest request, HttpServletResponse response) throws NoSuchAlgorithmException {
        return userService.userLogin(userID,userPW,request,response);

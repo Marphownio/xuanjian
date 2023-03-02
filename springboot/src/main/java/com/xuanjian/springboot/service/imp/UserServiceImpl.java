@@ -151,4 +151,13 @@ public class UserServiceImpl implements UserService {
         session.invalidate();
         return ResultMessage.SUCCESS;
     }
+
+    @Override
+    public ResultMessage userIfLogin(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        if(session.getAttribute("userName") == null || session.getAttribute("userID") == null){
+            return ResultMessage.NOT_LOGIN;
+        }
+        else return ResultMessage.ALREADY_LOGIN;
+    }
 }

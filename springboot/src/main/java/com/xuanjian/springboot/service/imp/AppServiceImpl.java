@@ -53,6 +53,7 @@ public class AppServiceImpl implements AppService {
             return ResultMessage.FILE_EMPTY;
         }
         Boolean emptyFlag = Boolean.FALSE;
+        Process p = null;
         for(MultipartFile file : files) {
             //获取文件名
             String apkName = file.getOriginalFilename();
@@ -101,8 +102,7 @@ public class AppServiceImpl implements AppService {
             }
             String cmd = "chmod o+w /home/scam/seaweedfs/data/mount/2023/";
             cmd += tempApk.getId();
-            Process p = Runtime.getRuntime().exec(cmd);
-            p.destroy();
+            p = Runtime.getRuntime().exec(cmd);
             //写入文件
             String filePath = directoryPath; // 上传后的路径
             filePath += "/";
@@ -130,6 +130,7 @@ public class AppServiceImpl implements AppService {
                 return ResultMessage.FAILED;
             }
         }
+        p.exitValue();
         if(!apkIDSet.isEmpty()){
             session.setAttribute("tempUploadSet", apkIDSet);
         }

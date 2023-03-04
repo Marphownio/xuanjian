@@ -6,4 +6,6 @@ import org.springframework.http.ResponseEntity;
 public interface DomainService {
 
     ResponseEntity<DomainInform> domainOverview();
+
+    ResponseEntity<Object> getDomainsByAppId(int appId);
 }

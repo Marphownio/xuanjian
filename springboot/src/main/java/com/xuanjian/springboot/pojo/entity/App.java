@@ -57,5 +57,44 @@ public class App implements Serializable {
 
     @Column(name = "plat_version")
     private Integer platVersion;
+
+    @Column(name = "version_code")
+    private String versionCode;
+
+    @Column(name = "sha1")
+    private String sha1;
+
+    @Column(name = "sha256")
+    private String sha256;
+
+    @Column(name = "hash_algo")
+    private String hashAlgo;
+
+    @Column(name = "sign_algo")
+    private String signAlgo;
+
+    @Column(name = "serial_number")
+    private String serialNumber;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "common_name")
+    private String commonName;
+
+    @Column(name = "org_unit")
+    private String orgUnit;
+
+    @Column(name = "org")
+    private String org;
+
+    @Column(name = "locality")
+    private String locality;
+
+    @Column(name = "place")
+    private String place;
+
+    @Column(name = "country")
+    private String country;
 }
 

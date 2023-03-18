@@ -65,6 +65,7 @@ public class AppServiceImpl implements AppService {
             }
             //获取当前时间
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+            df.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
             String date = df.format(new Date());
             //创建app对象
             App newApk = new App();

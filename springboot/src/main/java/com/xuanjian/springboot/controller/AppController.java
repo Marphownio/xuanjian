@@ -20,6 +20,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/app")
+@CrossOrigin(originPatterns = "*",allowCredentials = "true")
 public class AppController {
 
     @Resource

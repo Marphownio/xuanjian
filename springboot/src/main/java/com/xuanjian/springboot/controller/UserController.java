@@ -12,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
 
 @RestController
 @RequestMapping(value = "/user")
+@CrossOrigin(originPatterns = "*",allowCredentials = "true")
 public class UserController {
 
     @Resource

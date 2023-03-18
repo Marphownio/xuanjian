@@ -4,6 +4,7 @@ import com.xuanjian.springboot.pojo.entity.DomainInform;
 import com.xuanjian.springboot.service.AppService;
 import com.xuanjian.springboot.service.DomainService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping(value = "/overview")
+@CrossOrigin(originPatterns = "*",allowCredentials = "true")
 public class OverviewController {
 
     @Resource

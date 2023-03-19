@@ -29,4 +29,6 @@ public interface AppService {
     ResponseEntity<Set<App>> searchAppByName(String appName);
 
     ResponseEntity<byte[]> getAppIconById(Long appId) throws IOException;
+
+    ResponseEntity<byte[]> getScreenshotByUrl(Long appId,String screenShotName) throws IOException;
 }

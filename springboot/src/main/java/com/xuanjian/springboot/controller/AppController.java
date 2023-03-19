@@ -35,6 +35,10 @@ public class AppController {
     public ResponseEntity<Set<String>> getScreenshotById(@RequestParam("appId") Long appId){
         return appService.getScreenshotById(appId);
     }
+    @GetMapping("/screeshotImg")
+    public ResponseEntity<byte[]> getScreenshotByUrl(@RequestParam("appId") Long appId,@RequestParam("screenShotName") String screenShotName) throws IOException {
+        return appService.getScreenshotByUrl(appId,screenShotName);
+    }
     @GetMapping("/appIcon")
     public ResponseEntity<byte[]> getAppIconById(@RequestParam("appId") Long appId) throws IOException {
         return appService.getAppIconById(appId);

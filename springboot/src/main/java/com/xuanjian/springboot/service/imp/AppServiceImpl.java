@@ -206,4 +206,24 @@ public class AppServiceImpl implements AppService {
         }
         return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity getScreenshotByUrl(Long appId,String screenShotName) throws IOException {
+        byte[] bytes;
+        // 设置一个head
+        HttpHeaders headers = new HttpHeaders();
+        //设置ContentType的值 IMAGE_JPEG在浏览器返回图片
+        headers.setContentType(MediaType.IMAGE_PNG);
+        try{
+            File file = new File("/home/scam/seaweedfs/data/mount/2023/"+appId+"/"+screenShotName);
+            // 内容是字节流
+            FileInputStream fis = new FileInputStream(file);
+            bytes = new byte[fis.available()];
+            fis.read(bytes);
+            fis.close();
+        }catch (Exception e){
+            return new ResponseEntity<>(new HashSet<>(), HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+    }
 }

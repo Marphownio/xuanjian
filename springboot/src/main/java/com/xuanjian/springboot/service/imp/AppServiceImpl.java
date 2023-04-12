@@ -184,7 +184,7 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public ResponseEntity<Set<App>> searchAppByName(String appName){
-        return ResponseEntity.ok(appRepository.findAllByNameLike("%"+appName+"%"));
+        return ResponseEntity.ok(appRepository.findByNameLikeWithNoMD5Repeat("%"+appName+"%"));
     }
 
     @Override
@@ -225,5 +225,98 @@ public class AppServiceImpl implements AppService {
             return new ResponseEntity<>(new HashSet<>(), HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity checkMD5Repeat(Long appId){
+        return new ResponseEntity<>(appRepository.findMD5Repeat(appId), HttpStatus.OK);
+    }
+
+    @Override
+    public ResultMessage recheckAppById(Long appId) throws IOException, InterruptedException {
+        Optional<App> currentApp = appRepository.findById(appId);
+        if(!currentApp.isPresent()){
+            return ResultMessage.FAILED;
+        }
+        Set<App> appList = currentApp.get().getRecheckAppList();
+        if(appList.size()<3){
+            if(reInsertAppByID(appId)==true){
+                return ResultMessage.SUCCESS;
+            }
+            else {
+                return ResultMessage.FAILED;
+            }
+        }
+        else{
+            return ResultMessage.OVER_LIMIT;
+        }
+    }
+
+    @Transactional
+    @Override
+    public Boolean reInsertAppByID(Long appId) throws IOException, InterruptedException {
+        Process p = null;
+        Optional<App> currentAppOp = appRepository.findById(appId);
+        if(!currentAppOp.isPresent()){
+            return false;
+        }
+        App currentApp = currentAppOp.get();
+        App newApp = new App();
+        newApp.setSize(currentApp.getSize());
+        newApp.setPackageName(currentApp.getPackageName());
+        newApp.setFirstUploadTime(currentApp.getFirstUploadTime());
+        newApp.setSandboxState(SandboxState.MD5_REPEATED);
+        newApp.setAnalysisState(AnalysisState.UPLOADED);
+        newApp.setRestorePath("temp");
+        App tempApk;
+
+        //新apk写入数据库
+        try {
+            tempApk = appRepository.save(newApp);
+        } catch (Exception e) {
+            return false;
+        }
+
+        //写入再次分析表
+        try {
+            currentApp.getRecheckAppList().add(tempApk);
+            appRepository.save(currentApp);
+        } catch (Exception e) {
+            return false;
+        }
+
+        //创建新文件夹
+        String directoryPath = "/home/scam/seaweedfs/data/mount/2023/";
+        directoryPath += tempApk.getId();
+        File dirMaker = new File(directoryPath);
+        if(!dirMaker.mkdir()){
+            return false;
+        }
+
+        //修改文件夹权限，创建apk的硬链接
+        String cmd = "chmod o+w /home/scam/seaweedfs/data/mount/2023/";
+        cmd += tempApk.getId();
+        p = Runtime.getRuntime().exec(cmd);
+        p.waitFor();
+        String filePath = directoryPath; // 上传后的路径
+        filePath += "/";
+        filePath += tempApk.getId();
+        filePath += ".apk";
+        String cmdForIn = "ln ";
+        cmdForIn+=currentApp.getRestorePath();
+        cmdForIn+=" ";
+        cmdForIn+=filePath;
+        p = Runtime.getRuntime().exec(cmdForIn);
+        p.waitFor();
+
+        //设置temp的新存储路径
+        tempApk.setRestorePath(filePath);
+        try {
+            //apk写入存储路径
+            appRepository.save(tempApk);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }

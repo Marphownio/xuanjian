@@ -11,5 +11,6 @@ public enum ResultMessage {
     FILE_EMPTY,
     VERIFY_CODE_ERROR,
     PART_SUCCESS,
-    ALREADY_LOGIN
+    ALREADY_LOGIN,
+    OVER_LIMIT
 }

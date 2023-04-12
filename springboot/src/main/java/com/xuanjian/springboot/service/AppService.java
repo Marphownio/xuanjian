@@ -19,8 +19,13 @@ public interface AppService {
 
     ResultMessage userUploadApk(MultipartFile[] files,HttpServletRequest request) throws IOException, ParseException;
 
+    ResponseEntity checkMD5Repeat(Long appId);
     //根据ID获取APP的信息
     Optional<App> getAppInformById(Long appId);
+
+    Boolean reInsertAppByID(Long appId) throws IOException, InterruptedException;
+
+    ResultMessage recheckAppById(Long appId) throws IOException, InterruptedException;
 
     ResponseEntity<Set<String>> getScreenshotById(Long appId);
 

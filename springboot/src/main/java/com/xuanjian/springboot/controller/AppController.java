@@ -58,4 +58,14 @@ public class AppController {
     public ResponseEntity<Set<App>> searchAppByName(@RequestParam("appName") String appName){
         return appService.searchAppByName(appName);
     }
+
+    @GetMapping("/checkRepeatedMD5")
+    public ResponseEntity checkRepeatedMD5(@RequestParam("appId") Long appId){
+        return appService.checkMD5Repeat(appId);
+    }
+
+    @PostMapping("/recheckApp")
+    public ResultMessage recheckApp(@RequestParam("appId") Long appId) throws IOException, InterruptedException {
+        return appService.recheckAppById(appId);
+    }
 }

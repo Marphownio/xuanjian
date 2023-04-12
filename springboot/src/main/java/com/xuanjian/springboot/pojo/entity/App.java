@@ -8,6 +8,8 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity(name = "apps")
@@ -43,7 +45,7 @@ public class App implements Serializable {
     private AnalysisState analysisState;
 
     @Column(name = "analyse_time")
-    private Integer analyseTime;
+    private String analyseTime;
 
     @Column(name = "signature_publisher")
     private String signaturePublisher;
@@ -96,5 +98,10 @@ public class App implements Serializable {
 
     @Column(name = "country")
     private String country;
+
+    @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinTable(name = "recheck_table", joinColumns = {@JoinColumn(name= "origin_app_id", referencedColumnName="id")},
+            inverseJoinColumns = {@JoinColumn(name= "rechecked_app_id", referencedColumnName="id")})
+    private Set<App> recheckAppList = new HashSet<App>(0);
 }
 

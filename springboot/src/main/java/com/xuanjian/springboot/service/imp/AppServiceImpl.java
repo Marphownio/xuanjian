@@ -255,6 +255,9 @@ public class AppServiceImpl implements AppService {
     @Transactional
     @Override
     public Boolean reInsertAppByID(Long appId) throws IOException, InterruptedException {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        df.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+        String newDate = df.format(new Date());
         Process p = null;
         Optional<App> currentAppOp = appRepository.findById(appId);
         if(!currentAppOp.isPresent()){
@@ -264,7 +267,7 @@ public class AppServiceImpl implements AppService {
         App newApp = new App();
         newApp.setSize(currentApp.getSize());
         newApp.setPackageName(currentApp.getPackageName());
-        newApp.setFirstUploadTime(currentApp.getFirstUploadTime());
+        newApp.setFirstUploadTime(newDate);
         newApp.setSandboxState(SandboxState.MD5_REPEATED);
         newApp.setAnalysisState(AnalysisState.UPLOADED);
         newApp.setRestorePath("temp");

@@ -99,6 +99,9 @@ public class App implements Serializable {
     @Column(name = "country")
     private String country;
 
+    @Column(name = "permissions")
+    private String permissions;
+
     @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
     @JoinTable(name = "recheck_table", joinColumns = {@JoinColumn(name= "origin_app_id", referencedColumnName="id")},
             inverseJoinColumns = {@JoinColumn(name= "rechecked_app_id", referencedColumnName="id")})

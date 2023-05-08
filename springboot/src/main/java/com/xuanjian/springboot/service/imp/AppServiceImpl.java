@@ -233,14 +233,14 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public ResultMessage recheckAppById(Long appId) throws IOException, InterruptedException {
+    public ResultMessage recheckAppById(Long appId,HttpServletRequest request) throws IOException, InterruptedException {
         Optional<App> currentApp = appRepository.findById(appId);
         if(!currentApp.isPresent()){
             return ResultMessage.FAILED;
         }
         Set<App> appList = currentApp.get().getRecheckAppList();
         if(appList.size()<3){
-            if(reInsertAppByID(appId)==true){
+            if(reInsertAppByID(appId, request)==true){
                 return ResultMessage.SUCCESS;
             }
             else {
@@ -254,7 +254,12 @@ public class AppServiceImpl implements AppService {
 
     @Transactional
     @Override
-    public Boolean reInsertAppByID(Long appId) throws IOException, InterruptedException {
+    public Boolean reInsertAppByID(Long appId,HttpServletRequest request) throws IOException, InterruptedException {
+        HttpSession session = request.getSession();
+        HashSet<Long> apkIDSet = new HashSet<Long>();
+        if(session.getAttribute("tempUploadSet") != null){
+            apkIDSet = (HashSet<Long>) session.getAttribute("tempUploadSet");
+        }
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         df.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
         String newDate = df.format(new Date());
@@ -276,6 +281,17 @@ public class AppServiceImpl implements AppService {
         //新apk写入数据库
         try {
             tempApk = appRepository.save(newApp);
+            if (session.getAttribute("userName") != null && session.getAttribute("userID") != null) {
+                Long userID = (Long) session.getAttribute("userID");
+                Optional<User> user = userRepository.findById(userID);
+                if (user.isPresent()) {
+                    user.get().getAppList().add(tempApk);
+                    userRepository.save(user.get());
+                }
+            }
+            else{
+                apkIDSet.add(tempApk.getId());
+            }
         } catch (Exception e) {
             return false;
         }
@@ -319,6 +335,9 @@ public class AppServiceImpl implements AppService {
             appRepository.save(tempApk);
         } catch (Exception e) {
             return false;
+        }
+        if(!apkIDSet.isEmpty()){
+            session.setAttribute("tempUploadSet", apkIDSet);
         }
         return true;
     }

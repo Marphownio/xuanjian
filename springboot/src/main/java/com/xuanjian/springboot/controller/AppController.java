@@ -65,7 +65,7 @@ public class AppController {
     }
 
     @PostMapping("/recheckApp")
-    public ResultMessage recheckApp(@RequestParam("appId") Long appId) throws IOException, InterruptedException {
-        return appService.recheckAppById(appId);
+    public ResultMessage recheckApp(@RequestParam("appId") Long appId,HttpServletRequest request) throws IOException, InterruptedException {
+        return appService.recheckAppById(appId,request);
     }
 }

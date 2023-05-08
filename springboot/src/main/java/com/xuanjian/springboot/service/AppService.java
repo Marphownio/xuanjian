@@ -23,9 +23,9 @@ public interface AppService {
     //根据ID获取APP的信息
     Optional<App> getAppInformById(Long appId);
 
-    Boolean reInsertAppByID(Long appId) throws IOException, InterruptedException;
+    Boolean reInsertAppByID(Long appId,HttpServletRequest request) throws IOException, InterruptedException;
 
-    ResultMessage recheckAppById(Long appId) throws IOException, InterruptedException;
+    ResultMessage recheckAppById(Long appId,HttpServletRequest request) throws IOException, InterruptedException;
 
     ResponseEntity<Set<String>> getScreenshotById(Long appId);
 

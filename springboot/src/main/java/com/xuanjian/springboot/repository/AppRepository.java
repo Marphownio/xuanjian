@@ -13,7 +13,7 @@ public interface AppRepository extends JpaRepository<App,Long> {
 
 //    Set<App> findAllByNameLike(String appName);
 
-    @Query(value = "Select * from apps where name like ?1 and id in (select MIN(id) from apps where md5 is not null group by md5 union select id from apps where md5 is null)", nativeQuery = true)
+    @Query(value = "Select * from apps where name like ?1 and sandbox_state <> 4 and analysis_state <> 7 and id in (select MIN(id) from apps where md5 is not null group by md5 union select id from apps where md5 is null)", nativeQuery = true)
     Set<App> findByNameLikeWithNoMD5Repeat(String appName);
 
     @Query(value = "select id,first_upload_time,analyse_time,sandbox_state,analysis_state from apps where md5 in (select md5 from apps where id = ?1)", nativeQuery = true)
